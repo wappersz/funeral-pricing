@@ -130,7 +130,10 @@ export default function SearchPage() {
 
       {/* Footer */}
       <footer className="border-t border-border px-6 py-8 text-center text-sm text-gray">
-        <p>
+        <Link href="/blog" className="transition-colors hover:text-navy">
+          Blog
+        </Link>
+        <p className="mt-2">
           &copy; {new Date().getFullYear()} funeralpricing.co.uk. All rights
           reserved.
         </p>
