@@ -119,7 +119,55 @@ export default function SearchPage() {
           {/* Results */}
           {results && results.length > 0 && (
             <>
-              <div className="overflow-hidden rounded-lg border border-border">
+              {/* Mobile: card layout */}
+              <div className="flex flex-col gap-3 md:hidden">
+                {results.map((home) => (
+                  <div
+                    key={home.id}
+                    className="rounded-lg border border-border bg-white p-4"
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="text-sm font-semibold text-foreground">
+                        {home.name}
+                      </h3>
+                      {home.website_url ? (
+                        <a
+                          href={home.website_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="shrink-0 rounded bg-green px-3 py-1 text-xs font-medium text-white transition-opacity hover:opacity-90"
+                        >
+                          View
+                        </a>
+                      ) : null}
+                    </div>
+                    <p className="mt-1 text-xs text-gray">
+                      {home.city} &middot; {Number(home.distance_miles).toFixed(1)} mi
+                    </p>
+                    <div className="mt-3 flex gap-4">
+                      <div>
+                        <p className="text-xs text-gray">Direct Cremation</p>
+                        <p className="text-sm font-medium text-foreground">
+                          {home.price_direct_cremation != null
+                            ? `£${home.price_direct_cremation.toLocaleString()}`
+                            : "—"}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray">Standard Funeral</p>
+                        <p className="text-sm font-medium text-foreground">
+                          {home.price_standard_funeral != null
+                            ? `£${home.price_standard_funeral.toLocaleString()}`
+                            : "—"}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop: table layout */}
+              <div className="hidden overflow-hidden rounded-lg border border-border md:block">
                 <table className="w-full text-left text-sm">
                   <thead>
                     <tr className="bg-navy text-white">
