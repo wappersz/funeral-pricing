@@ -1,21 +1,63 @@
 "use client";
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { funeralHomes } from "@/data/homes";
+
+interface SearchResult {
+  id: number;
+  name: string;
+  address: string;
+  postcode: string;
+  city: string;
+  price_direct_cremation: number | null;
+  price_standard_funeral: number | null;
+  website_url: string | null;
+  phone_number: string | null;
+  distance_miles: number;
+}
+
+interface SearchResponse {
+  postcode: string;
+  results: SearchResult[];
+  error?: string;
+}
 
 export default function SearchPage() {
-  const [query, setQuery] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [results, setResults] = useState<SearchResult[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [searchedPostcode, setSearchedPostcode] = useState<string | null>(null);
 
-  const filtered = funeralHomes.filter((home) => {
-    const q = query.toLowerCase().trim();
-    if (!q) return true;
-    return (
-      home.city.toLowerCase().includes(q) ||
-      home.postcode.toLowerCase().includes(q)
-    );
-  });
+  async function handleSearch(e: FormEvent) {
+    e.preventDefault();
+    const trimmed = postcode.trim();
+    if (!trimmed) return;
+
+    setLoading(true);
+    setError(null);
+    setResults(null);
+
+    try {
+      const res = await fetch(
+        `/api/search?postcode=${encodeURIComponent(trimmed)}`
+      );
+      const data: SearchResponse = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Something went wrong. Please try again.");
+        return;
+      }
+
+      setResults(data.results);
+      setSearchedPostcode(data.postcode);
+    } catch {
+      setError("Unable to connect. Please check your internet and try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -30,13 +72,6 @@ export default function SearchPage() {
             priority
           />
         </Link>
-        {/* <nav className="flex items-center gap-6 text-sm font-medium text-gray">
-          <Link href="/search" className="text-navy">
-            Search
-          </Link>
-          <span>About</span>
-          <span>Contact</span>
-        </nav> */}
       </header>
 
       {/* Main */}
@@ -46,85 +81,125 @@ export default function SearchPage() {
             Compare Funeral Prices
           </h1>
           <p className="mb-8 text-gray">
-            Search by city or postcode to find funeral directors near you.
+            Enter your postcode to find and compare funeral directors near you.
           </p>
 
-          {/* Search input */}
-          <div className="mb-8">
+          {/* Search form */}
+          <form onSubmit={handleSearch} className="mb-8 flex gap-3">
             <input
               type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Enter a city or postcode (e.g. London, M1, B16)"
-              className="w-full rounded-lg border border-border bg-white px-4 py-3 text-sm text-foreground placeholder:text-gray/60 focus:outline-none focus:ring-2 focus:ring-navy/30"
+              value={postcode}
+              onChange={(e) => setPostcode(e.target.value)}
+              placeholder="Enter your postcode (e.g. SW1A 1AA)"
+              className="flex-1 rounded-lg border border-border bg-white px-4 py-3 text-sm text-foreground placeholder:text-gray/60 focus:outline-none focus:ring-2 focus:ring-navy/30"
             />
-          </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="rounded-lg bg-navy px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              {loading ? "Searching..." : "Search"}
+            </button>
+          </form>
 
-          {/* Results */}
-          {filtered.length > 0 ? (
-            <div className="overflow-hidden rounded-lg border border-border">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="bg-navy text-white">
-                    <th className="px-4 py-3 font-medium">Name</th>
-                    <th className="px-4 py-3 font-medium">City</th>
-                    <th className="px-4 py-3 font-medium text-right">
-                      Direct Cremation
-                    </th>
-                    <th className="px-4 py-3 font-medium text-right">
-                      Standard Funeral
-                    </th>
-                    <th className="px-4 py-3 font-medium text-right">
-                      Details
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((home, i) => (
-                    <tr
-                      key={home.id}
-                      className={
-                        i % 2 === 0 ? "bg-white" : "bg-background"
-                      }
-                    >
-                      <td className="px-4 py-3 font-medium text-foreground">
-                        {home.name}
-                      </td>
-                      <td className="px-4 py-3 text-gray">{home.city}</td>
-                      <td className="px-4 py-3 text-right text-foreground">
-                        £{home.prices.directCremation.toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3 text-right text-foreground">
-                        £{home.prices.standardFuneral.toLocaleString()}
-                      </td>
-                      <td className="px-4 py-3 text-right">
-                        <a
-                          href={home.websiteUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-block rounded bg-green px-3 py-1 text-xs font-medium text-white transition-opacity hover:opacity-90"
-                        >
-                          View
-                        </a>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : (
-            <div className="rounded-lg border border-border bg-white px-6 py-10 text-center">
-              <p className="font-medium text-foreground">No results found</p>
-              <p className="mt-1 text-sm text-gray">
-                Try a different city or postcode.
-              </p>
+          {/* Error */}
+          {error && (
+            <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+              {error}
             </div>
           )}
 
-          <p className="mt-4 text-xs text-gray">
-            Showing {filtered.length} of {funeralHomes.length} funeral
-            directors
-          </p>
+          {/* Loading */}
+          {loading && (
+            <div className="rounded-lg border border-border bg-white px-6 py-10 text-center">
+              <p className="text-sm text-gray">Searching for funeral directors near you...</p>
+            </div>
+          )}
+
+          {/* Results */}
+          {results && results.length > 0 && (
+            <>
+              <div className="overflow-hidden rounded-lg border border-border">
+                <table className="w-full text-left text-sm">
+                  <thead>
+                    <tr className="bg-navy text-white">
+                      <th className="px-4 py-3 font-medium">Name</th>
+                      <th className="px-4 py-3 font-medium">City</th>
+                      <th className="px-4 py-3 font-medium text-right">
+                        Distance
+                      </th>
+                      <th className="px-4 py-3 font-medium text-right">
+                        Direct Cremation
+                      </th>
+                      <th className="px-4 py-3 font-medium text-right">
+                        Standard Funeral
+                      </th>
+                      <th className="px-4 py-3 font-medium text-right">
+                        Details
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {results.map((home, i) => (
+                      <tr
+                        key={home.id}
+                        className={
+                          i % 2 === 0 ? "bg-white" : "bg-background"
+                        }
+                      >
+                        <td className="px-4 py-3 font-medium text-foreground">
+                          {home.name}
+                        </td>
+                        <td className="px-4 py-3 text-gray">{home.city}</td>
+                        <td className="px-4 py-3 text-right text-gray">
+                          {Number(home.distance_miles).toFixed(1)} mi
+                        </td>
+                        <td className="px-4 py-3 text-right text-foreground">
+                          {home.price_direct_cremation != null
+                            ? `£${home.price_direct_cremation.toLocaleString()}`
+                            : "—"}
+                        </td>
+                        <td className="px-4 py-3 text-right text-foreground">
+                          {home.price_standard_funeral != null
+                            ? `£${home.price_standard_funeral.toLocaleString()}`
+                            : "—"}
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          {home.website_url ? (
+                            <a
+                              href={home.website_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block rounded bg-green px-3 py-1 text-xs font-medium text-white transition-opacity hover:opacity-90"
+                            >
+                              View
+                            </a>
+                          ) : (
+                            <span className="text-xs text-gray">—</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="mt-4 text-xs text-gray">
+                Showing {results.length} funeral director{results.length !== 1 ? "s" : ""} within
+                30 miles of {searchedPostcode}
+              </p>
+            </>
+          )}
+
+          {/* No results */}
+          {results && results.length === 0 && (
+            <div className="rounded-lg border border-border bg-white px-6 py-10 text-center">
+              <p className="font-medium text-foreground">No results found</p>
+              <p className="mt-1 text-sm text-gray">
+                No funeral directors found within 30 miles of {searchedPostcode}.
+                Try a different postcode.
+              </p>
+            </div>
+          )}
         </div>
       </main>
 
