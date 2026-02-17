@@ -22,6 +22,45 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
+  const tokens: React.ReactNode[] = [];
+  // Match bold links [**text**](/url), plain links [text](/url), or **bold**
+  const regex = /\[(\*\*(.+?)\*\*)\]\((.+?)\)|\[(.+?)\]\((.+?)\)|\*\*(.+?)\*\*/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      tokens.push(text.slice(lastIndex, match.index));
+    }
+    if (match[2] && match[3]) {
+      // Bold link: [**text**](/url)
+      tokens.push(
+        <Link key={`${keyPrefix}-${match.index}`} href={match[3]} className="font-bold text-navy underline">
+          {match[2]}
+        </Link>
+      );
+    } else if (match[4] && match[5]) {
+      // Plain link: [text](/url)
+      tokens.push(
+        <Link key={`${keyPrefix}-${match.index}`} href={match[5]} className="text-navy underline">
+          {match[4]}
+        </Link>
+      );
+    } else if (match[6]) {
+      // Bold: **text**
+      tokens.push(<strong key={`${keyPrefix}-${match.index}`}>{match[6]}</strong>);
+    }
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    tokens.push(text.slice(lastIndex));
+  }
+
+  return tokens;
+}
+
 function renderContent(content: string) {
   const lines = content.split("\n");
   const elements: React.ReactNode[] = [];
@@ -31,9 +70,10 @@ function renderContent(content: string) {
   function flushList() {
     if (listItems.length > 0) {
       const isOrdered = /^\d+\./.test(listItems[0]);
-      const items = listItems.map((item, i) => (
-        <li key={i}>{item.replace(/^[-\d.]+\s*\*?\*?/, "").replace(/\*\*/g, "")}</li>
-      ));
+      const items = listItems.map((item, i) => {
+        const text = item.replace(/^[-\d.]+\s*/, "");
+        return <li key={i}>{renderInline(text, `li-${listIndex}-${i}`)}</li>;
+      });
       if (isOrdered) {
         elements.push(
           <ol key={`list-${listIndex}`} className="mb-4 list-decimal space-y-1 pl-6 text-foreground">
@@ -62,21 +102,15 @@ function renderContent(content: string) {
           {trimmed.replace("## ", "")}
         </h2>
       );
-    } else if (trimmed.startsWith("- **") || trimmed.startsWith("- ") || /^\d+\.\s/.test(trimmed)) {
+    } else if (trimmed.startsWith("- ") || /^\d+\.\s/.test(trimmed)) {
       listItems.push(trimmed);
     } else if (trimmed === "") {
       flushList();
     } else {
       flushList();
-      const parts = trimmed.split(/(\*\*.*?\*\*)/g).map((part, j) => {
-        if (part.startsWith("**") && part.endsWith("**")) {
-          return <strong key={j}>{part.slice(2, -2)}</strong>;
-        }
-        return part;
-      });
       elements.push(
         <p key={i} className="mb-4 leading-relaxed text-foreground">
-          {parts}
+          {renderInline(trimmed, `p-${i}`)}
         </p>
       );
     }

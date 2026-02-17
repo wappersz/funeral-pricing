@@ -98,7 +98,7 @@ The scheme works a little differently depending on where you are in the UK. In S
 
 If you disagree with a decision about your Funeral Expenses Payment, you have the right to appeal to the Social Security and Child Support Tribunal. You do not have to accept the outcome if you feel it is wrong.
 
-We hope this guide has helped make things a little clearer during what is undoubtedly an overwhelming time. If you have any questions about funeral costs more broadly, our team at funeralpricing.co.uk is here to help.
+We hope this guide has helped make things a little clearer during what is undoubtedly an overwhelming time. For a broader overview of what funerals cost, read our guide to [**understanding funeral costs in the UK**](/blog/understanding-funeral-costs-uk). If you are considering a more affordable option, you may also find our article on [**what direct cremation is and why it's growing**](/blog/what-is-direct-cremation) helpful.
     `.trim(),
   },
   {
@@ -122,7 +122,7 @@ A typical funeral price covers several components:
 
 ## Direct cremation: the affordable alternative
 
-Direct cremation has grown in popularity as a simpler, more affordable option. With a direct cremation, there is no funeral service — the cremation takes place without mourners present, and the ashes are returned to the family.
+Direct cremation has grown in popularity as a simpler, more affordable option. You can learn more in our dedicated guide to [**what direct cremation is and why it's growing in the UK**](/blog/what-is-direct-cremation). With a direct cremation, there is no funeral service — the cremation takes place without mourners present, and the ashes are returned to the family.
 
 Direct cremation prices typically range from **£1,000 to £1,500**, making it significantly cheaper than a traditional funeral. Families can then choose to hold a separate memorial or celebration of life on their own terms.
 
@@ -137,6 +137,8 @@ Funeral directors are now required to display a Standardised Price List, making 
 ## Planning ahead
 
 Pre-planning a funeral can help reduce costs and take the burden off your family. Many funeral directors offer pre-paid funeral plans that lock in today's prices. However, it's important to check what's covered and whether the plan is regulated by the Financial Conduct Authority (FCA).
+
+If you are struggling with the cost, you may be eligible for government support — read our guide on [**getting help with funeral costs**](/blog/getting-help-with-funeral-costs). And when you're ready to start looking at providers, our article on [**how to compare funeral directors**](/blog/how-to-compare-funeral-directors) walks you through what to look for.
 
 At funeralpricing.co.uk, we're building a service to help you compare funeral costs transparently, so you can focus on what matters most during a difficult time.
     `.trim(),
@@ -185,7 +187,7 @@ When comparing prices, check whether the quote includes:
 
 Direct cremation isn't for everyone. If a traditional funeral service is important to you or your family — whether religious or secular — then a standard funeral may be more appropriate. But for those who want simplicity, affordability, and the freedom to say goodbye on their own terms, it's an excellent option.
 
-We're building funeralpricing.co.uk to help you compare direct cremation prices across the UK, so you can find the right option for your family.
+To get a fuller picture of what funerals cost, take a look at our [**complete guide to understanding funeral costs in the UK**](/blog/understanding-funeral-costs-uk). If affordability is a concern, you may also qualify for government support — see our guide to [**getting help with funeral costs**](/blog/getting-help-with-funeral-costs). And when you're ready to choose a provider, our article on [**how to compare funeral directors**](/blog/how-to-compare-funeral-directors) can help.
     `.trim(),
   },
   {
@@ -244,7 +246,7 @@ Ultimately, you need to feel comfortable with your funeral director. They'll be 
 
 ## Making your choice
 
-Don't feel pressured to choose the first funeral director you contact. It's perfectly acceptable to get quotes from two or three providers and compare. At funeralpricing.co.uk, we're building a tool to make this comparison easier, helping you find the right funeral director at a fair price.
+Don't feel pressured to choose the first funeral director you contact. It's perfectly acceptable to get quotes from two or three providers and compare. For more on what those quotes should include, read our [**complete guide to understanding funeral costs in the UK**](/blog/understanding-funeral-costs-uk). If you're considering a simpler option, our guide on [**what direct cremation is**](/blog/what-is-direct-cremation) explains how it works. And if cost is a real worry, find out whether you qualify for government support in our article on [**getting help with funeral costs**](/blog/getting-help-with-funeral-costs).
     `.trim(),
   },
 ];
