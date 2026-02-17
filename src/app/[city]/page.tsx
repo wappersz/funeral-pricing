@@ -93,7 +93,7 @@ export default async function CityPage({ params }: CityPageProps) {
                 {featured.map((home, i) => (
                   <div
                     key={home.id}
-                    className="relative overflow-hidden rounded-xl border-2 border-trusted-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+                    className="relative flex flex-col overflow-hidden rounded-xl border-2 border-trusted-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
                   >
                     {/* Rank badge */}
                     <span className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-trusted-light text-xs font-bold text-trusted">
@@ -111,7 +111,7 @@ export default async function CityPage({ params }: CityPageProps) {
                     </p>
 
                     {/* Prices */}
-                    <div className="mt-4 space-y-1.5">
+                    <div className="mt-4 flex-1 space-y-1.5">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-gray">Direct Cremation</span>
                         <span className="font-medium text-foreground">
