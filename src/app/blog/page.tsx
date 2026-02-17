@@ -3,6 +3,8 @@ import Image from "next/image";
 import { posts } from "@/data/posts";
 import type { Metadata } from "next";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Blog | Funeral Pricing",
   description:
@@ -10,6 +12,9 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
+  const today = new Date().toISOString().split("T")[0];
+  const publishedPosts = posts.filter((post) => post.date <= today);
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="flex items-center justify-between border-b border-border px-6 py-4">
@@ -31,7 +36,7 @@ export default function BlogPage() {
         </p>
 
         <div className="flex flex-col gap-8">
-          {posts.map((post) => (
+          {publishedPosts.map((post) => (
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
