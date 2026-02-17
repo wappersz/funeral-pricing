@@ -101,7 +101,7 @@ function renderContent(content: string) {
         <Link
           key={`cta-${i}`}
           href="/"
-          className="my-6 block w-full rounded-lg bg-green py-4 text-center text-base font-semibold text-white transition-opacity hover:opacity-90"
+          className="my-6 block w-full rounded-lg bg-[#4bbb94] py-4 text-center text-base font-semibold text-white transition-opacity hover:opacity-90"
         >
           Check Funeral Prices Near Me
         </Link>
