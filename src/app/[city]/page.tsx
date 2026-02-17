@@ -10,9 +10,7 @@ interface CityPageProps {
   params: Promise<{ city: string }>;
 }
 
-export function generateStaticParams() {
-  return cities.map((c) => ({ city: c.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
