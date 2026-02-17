@@ -95,7 +95,18 @@ function renderContent(content: string) {
   lines.forEach((line, i) => {
     const trimmed = line.trim();
 
-    if (trimmed.startsWith("## ")) {
+    if (trimmed === "[CTA]") {
+      flushList();
+      elements.push(
+        <Link
+          key={`cta-${i}`}
+          href="/"
+          className="my-6 block w-full rounded-lg bg-green py-4 text-center text-base font-semibold text-white transition-opacity hover:opacity-90"
+        >
+          Check Funeral Prices Near Me
+        </Link>
+      );
+    } else if (trimmed.startsWith("## ")) {
       flushList();
       elements.push(
         <h2 key={i} className="mb-3 mt-8 text-xl font-semibold text-navy">

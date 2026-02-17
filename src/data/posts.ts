@@ -20,6 +20,8 @@ Arranging a funeral is one of the hardest things any of us will ever have to do.
 
 Funeral Expenses Payment is a government scheme designed to help people on low incomes cover the cost of arranging a funeral. It will not necessarily cover everything, but it can take a significant amount of pressure off at an incredibly difficult time.
 
+[CTA]
+
 The payment can help with:
 
 - Burial fees for a specific plot
@@ -112,6 +114,8 @@ Funeral costs in the UK have risen significantly over the past decade, with the 
 
 ## What's included in a funeral cost?
 
+[CTA]
+
 A typical funeral price covers several components:
 
 - **Funeral director fees** — Their professional services, collecting the deceased, preparing them, and coordinating the funeral day. This usually makes up the largest portion of the bill.
@@ -161,6 +165,8 @@ The process is straightforward:
 
 There's no hearse, no flowers, no service — just a simple, dignified cremation.
 
+[CTA]
+
 ## Why are people choosing it?
 
 There are several reasons direct cremation is growing:
@@ -207,6 +213,8 @@ Since 2021, all funeral directors in the UK are required to display a Standardis
 - The total cost
 
 If a funeral director isn't transparent about their pricing, consider it a red flag.
+
+[CTA]
 
 ## 2. Reputation and reviews
 
