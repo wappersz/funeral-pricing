@@ -12,15 +12,28 @@ interface Signup {
 export default function AdminPage() {
   const [signups, setSignups] = useState<Signup[]>([]);
   const [loading, setLoading] = useState(true);
+  const [password, setPassword] = useState("");
+  const [authenticated, setAuthenticated] = useState(false);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    fetch("/api/signups")
-      .then((res) => res.json())
+  function fetchSignups(pw: string) {
+    fetch("/api/signups", {
+      headers: { "x-admin-password": pw },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
       .then((data) => {
         setSignups(data);
+        setAuthenticated(true);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Wrong password");
         setLoading(false);
       });
-  }, []);
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -32,6 +45,36 @@ export default function AdminPage() {
       </header>
 
       <main className="mx-auto max-w-3xl px-6 py-10">
+        {!authenticated ? (
+          <div className="mx-auto max-w-xs pt-20">
+            <h1 className="mb-6 text-center text-2xl font-semibold text-navy">Admin Login</h1>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                setError("");
+                setLoading(true);
+                fetchSignups(password);
+              }}
+              className="flex flex-col gap-3"
+            >
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                className="rounded-lg border border-border bg-white px-4 py-3 text-sm text-foreground placeholder:text-gray/60 focus:outline-none focus:ring-2 focus:ring-navy/30"
+              />
+              {error && <p className="text-sm text-red-500">{error}</p>}
+              <button
+                type="submit"
+                className="rounded-lg bg-navy px-6 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              >
+                Log In
+              </button>
+            </form>
+          </div>
+        ) : (
+        <>
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-navy">Email Signups</h1>
@@ -90,6 +133,8 @@ export default function AdminPage() {
               </tbody>
             </table>
           </div>
+        )}
+        </>
         )}
       </main>
     </div>
