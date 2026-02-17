@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/data/posts";
-import { cities } from "@/data/cities";
+import { getTowns } from "@/lib/search";
 
 export const dynamic = "force-dynamic";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const today = new Date().toISOString().split("T")[0];
   const blogPosts = posts.filter((post) => post.date <= today).map((post) => ({
     url: `https://www.funeralpricing.co.uk/blog/${post.slug}`,
@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));
+
+  const towns = await getTowns();
 
   return [
     {
@@ -33,8 +35,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     ...blogPosts,
-    ...cities.map((city) => ({
-      url: `https://www.funeralpricing.co.uk/${city.slug}`,
+    ...towns.map((town) => ({
+      url: `https://www.funeralpricing.co.uk/${town.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,

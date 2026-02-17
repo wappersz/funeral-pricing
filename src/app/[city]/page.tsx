@@ -2,9 +2,8 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { cities, getCityBySlug } from "@/data/cities";
-import { geocodePostcode } from "@/lib/geocode";
-import { searchNearby, type SearchResult } from "@/lib/search";
+import { getTownBySlug, searchNearby, type SearchResult } from "@/lib/search";
+import { getTownContent } from "@/data/town-content";
 
 interface CityPageProps {
   params: Promise<{ city: string }>;
@@ -16,26 +15,22 @@ export async function generateMetadata({
   params,
 }: CityPageProps): Promise<Metadata> {
   const { city: slug } = await params;
-  const city = getCityBySlug(slug);
-  if (!city) return {};
+  const town = await getTownBySlug(slug);
+  if (!town) return {};
 
   return {
-    title: `Funeral Prices in ${city.name} | Compare Funeral Directors | Funeral Pricing`,
-    description: `Compare funeral costs from directors near ${city.name}. See up-to-date prices for direct cremation and standard funerals so you can make an informed choice.`,
+    title: `Funeral Prices in ${town.name} | Compare Funeral Directors | Funeral Pricing`,
+    description: `Compare funeral costs from directors near ${town.name}. See up-to-date prices for direct cremation and standard funerals so you can make an informed choice.`,
   };
 }
 
 export default async function CityPage({ params }: CityPageProps) {
   const { city: slug } = await params;
-  const city = getCityBySlug(slug);
-  if (!city) notFound();
+  const town = await getTownBySlug(slug);
+  if (!town) notFound();
 
-  const geo = await geocodePostcode(city.postcode);
-  let results: SearchResult[] = [];
-
-  if (geo) {
-    results = await searchNearby(geo.latitude, geo.longitude);
-  }
+  const results: SearchResult[] = await searchNearby(town.lat, town.lng);
+  const seoContent = getTownContent(town.name, town.count);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -56,15 +51,10 @@ export default async function CityPage({ params }: CityPageProps) {
       <main className="flex-1 px-6 py-10">
         <div className="mx-auto max-w-4xl">
           <h1 className="mb-4 text-3xl font-semibold tracking-tight text-navy">
-            Funeral Prices in {city.name}
+            Funeral Prices in {town.name}
           </h1>
           <p className="mb-8 leading-relaxed text-foreground/80">
-            Compare funeral costs from directors near {city.name} with
-            transparent, up-to-date pricing. Whether you are looking for a
-            simple direct cremation or a traditional attended funeral, our
-            comparison table helps you see what families in {city.name} can
-            expect to pay. Every price is sourced directly from the funeral
-            director so you can make an informed choice during a difficult time.
+            {seoContent}
           </p>
 
           {/* Results */}
@@ -137,14 +127,14 @@ export default async function CityPage({ params }: CityPageProps) {
               <p className="mt-4 text-xs text-gray">
                 Showing {results.length} funeral director
                 {results.length !== 1 ? "s" : ""} within 30 miles of{" "}
-                {city.name}
+                {town.name}
               </p>
             </>
           ) : (
             <div className="rounded-lg border border-border bg-white px-6 py-10 text-center">
               <p className="font-medium text-foreground">No results found</p>
               <p className="mt-1 text-sm text-gray">
-                No funeral directors found within 30 miles of {city.name}. Try
+                No funeral directors found within 30 miles of {town.name}. Try
                 searching by your postcode instead.
               </p>
             </div>
