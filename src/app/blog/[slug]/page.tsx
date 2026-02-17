@@ -130,7 +130,7 @@ export default async function BlogPostPage({ params }: Props) {
 
       <footer className="border-t border-border px-6 py-8 text-center text-sm text-gray">
         <Link href="/blog" className="transition-colors hover:text-navy">
-          Blog
+          Latest Blog Posts
         </Link>
         <span className="mx-2">&middot;</span>
         <p className="mt-2">
