@@ -30,13 +30,13 @@ export default function SearchPage() {
             priority
           />
         </Link>
-        <nav className="flex items-center gap-6 text-sm font-medium text-gray">
+        {/* <nav className="flex items-center gap-6 text-sm font-medium text-gray">
           <Link href="/search" className="text-navy">
             Search
           </Link>
           <span>About</span>
           <span>Contact</span>
-        </nav>
+        </nav> */}
       </header>
 
       {/* Main */}

@@ -20,13 +20,13 @@ export default function Home() {
             priority
           />
         </Link>
-        <nav className="flex items-center gap-6 text-sm font-medium text-gray">
+        {/* <nav className="flex items-center gap-6 text-sm font-medium text-gray">
           <Link href="/search" className="transition-colors hover:text-navy">
             Search
           </Link>
           <span>About</span>
           <span>Contact</span>
-        </nav>
+        </nav> */}
       </header>
 
       {/* Main */}
