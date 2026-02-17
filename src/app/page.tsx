@@ -62,15 +62,28 @@ export default function Home() {
                   Be the first to know when we launch
                 </p>
                 <form
-                  onSubmit={(e) => {
+                  onSubmit={async (e) => {
                     e.preventDefault();
-                    e.currentTarget.reset();
-                    setSubmitted(true);
+                    const form = e.currentTarget;
+                    const email = new FormData(form).get("email") as string;
+                    try {
+                      const res = await fetch("/api/signup", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ email }),
+                      });
+                      if (!res.ok) throw new Error();
+                      form.reset();
+                      setSubmitted(true);
+                    } catch {
+                      alert("Something went wrong. Please try again.");
+                    }
                   }}
                   className="flex flex-col gap-3 sm:flex-row"
                 >
                   <input
                     type="email"
+                    name="email"
                     required
                     placeholder="Your email address"
                     className="flex-1 rounded-lg border border-border bg-white px-4 py-3 text-sm text-foreground placeholder:text-gray/60 focus:outline-none focus:ring-2 focus:ring-navy/30"
