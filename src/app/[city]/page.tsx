@@ -9,6 +9,22 @@ interface CityPageProps {
   params: Promise<{ city: string }>;
 }
 
+/** Deterministically pick `n` items from results based on town name hash. */
+function pickFeatured(results: SearchResult[], seed: string, n: number): SearchResult[] {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) {
+    h = (Math.imul(31, h) + seed.charCodeAt(i)) | 0;
+  }
+  h = Math.abs(h);
+  const pool = [...results];
+  const picked: SearchResult[] = [];
+  for (let i = 0; i < n && pool.length > 0; i++) {
+    const idx = (h + i * 7) % pool.length;
+    picked.push(pool.splice(idx, 1)[0]);
+  }
+  return picked;
+}
+
 export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
@@ -31,6 +47,11 @@ export default async function CityPage({ params }: CityPageProps) {
 
   const results: SearchResult[] = await searchNearby(town.lat, town.lng);
   const seoContent = getTownContent(town.name, town.count);
+
+  // Pick 3 featured providers (deterministic per town via simple hash)
+  const featured = results.length >= 3
+    ? pickFeatured(results, town.name, 3)
+    : [];
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -56,6 +77,79 @@ export default async function CityPage({ params }: CityPageProps) {
           <p className="mb-8 leading-relaxed text-foreground/80">
             {seoContent}
           </p>
+
+          {/* Highly Trusted */}
+          {featured.length > 0 && (
+            <section className="mb-10">
+              <div className="mb-4 flex items-center gap-2">
+                <span className="inline-flex items-center rounded-full bg-navy px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
+                  Highly Trusted
+                </span>
+                <span className="text-sm text-gray">
+                  Top funeral directors near {town.name}
+                </span>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {featured.map((home, i) => (
+                  <div
+                    key={home.id}
+                    className="relative overflow-hidden rounded-xl border-2 border-green-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+                  >
+                    {/* Rank badge */}
+                    <span className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-green-light text-xs font-bold text-navy">
+                      {i + 1}
+                    </span>
+
+                    {/* Name */}
+                    <h3 className="pr-8 text-base font-semibold text-foreground leading-tight">
+                      {home.name}
+                    </h3>
+
+                    {/* Location + distance */}
+                    <p className="mt-1.5 text-xs text-gray">
+                      {home.city} &middot; {Number(home.distance_miles).toFixed(1)} mi
+                    </p>
+
+                    {/* Prices */}
+                    <div className="mt-4 space-y-1.5">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray">Direct Cremation</span>
+                        <span className="font-medium text-foreground">
+                          {home.price_direct_cremation != null
+                            ? `£${home.price_direct_cremation.toLocaleString()}`
+                            : "—"}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray">Standard Funeral</span>
+                        <span className="font-medium text-foreground">
+                          {home.price_standard_funeral != null
+                            ? `£${home.price_standard_funeral.toLocaleString()}`
+                            : "—"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* CTA */}
+                    {home.website_url ? (
+                      <a
+                        href={home.website_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-4 block rounded-lg bg-green py-2 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
+                      >
+                        View Website
+                      </a>
+                    ) : (
+                      <div className="mt-4 block rounded-lg bg-background py-2 text-center text-sm font-medium text-gray">
+                        No website listed
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
           {/* Results */}
           {results.length > 0 ? (
