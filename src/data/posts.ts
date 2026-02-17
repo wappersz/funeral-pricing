@@ -8,6 +8,100 @@ export interface BlogPost {
 
 export const posts: BlogPost[] = [
   {
+    slug: "getting-help-with-funeral-costs",
+    title: "Getting Help With Funeral Costs: A Guide to Funeral Expenses Payment",
+    excerpt:
+      "If you're on certain benefits, you may be able to get financial support from the government through a Funeral Expenses Payment. This guide explains what it is, who can get it, and how to apply.",
+    date: "2026-02-17",
+    content: `
+Arranging a funeral is one of the hardest things any of us will ever have to do. At a time when you are grieving and exhausted, the last thing you need is to worry about how you are going to afford it. If you are on certain benefits, you may be able to get financial support from the government through something called a Funeral Expenses Payment (sometimes referred to as a Funeral Payment). This guide explains what it is, who can get it, and how to apply.
+
+## What Is a Funeral Expenses Payment?
+
+Funeral Expenses Payment is a government scheme designed to help people on low incomes cover the cost of arranging a funeral. It will not necessarily cover everything, but it can take a significant amount of pressure off at an incredibly difficult time.
+
+The payment can help with:
+
+- Burial fees for a specific plot
+- Cremation fees, including the cost of the doctor's certificate
+- Travel costs to arrange or attend the funeral
+- The cost of moving the body within the UK, if it needs to be moved more than 50 miles
+- Death certificates and other necessary documents
+- Up to £1,000 towards other funeral expenses, such as the funeral director's fees, flowers, or the coffin
+
+If the person who has died had a pre-paid funeral plan, you may still be able to claim up to £120 to help cover any items not included in that plan.
+
+It is worth knowing that if you are entitled to money from the deceased's estate, the amount you receive through this scheme will be reduced accordingly. The estate includes money and property, though not a home or personal belongings left to a widow, widower or surviving civil partner.
+
+## How Is the Money Paid?
+
+If you have already paid for the funeral, the money will be paid directly into your bank, building society or credit union account. If the funeral has not yet been paid for, the payment will go straight to the funeral director or whoever is organising the funeral on your behalf.
+
+## Who Is Eligible?
+
+To qualify, you need to meet three conditions: you must be receiving certain benefits, you must have a qualifying relationship with the person who has died, and the funeral must be taking place in the UK, the European Economic Area (EEA) or Switzerland.
+
+## Benefits You Need to Be Receiving
+
+Either you or your partner must be getting at least one of the following:
+
+- Universal Credit
+- Income Support
+- Income-based Jobseeker's Allowance
+- Income-related Employment and Support Allowance
+- Pension Credit
+- Housing Benefit
+- A Support for Mortgage Interest loan
+
+Importantly, if you have applied for one of these benefits and are still waiting to hear back, you can still go ahead and claim. You do not have to wait for a decision first.
+
+## Your Relationship With the Deceased
+
+The rules here can feel a little complex, so let us walk you through them gently.
+
+You are likely to be eligible if you are:
+
+- The partner of the person who has died
+- The parent of a baby who was stillborn after 24 weeks of pregnancy
+- The parent or person responsible for a child who died under the age of 16 (or under 20 if they were in approved education or training)
+
+If you are a close friend or relative rather than a partner or parent, you may still be able to claim, but only in certain situations. For example, if the person who died did not have a partner, or if their partner or the child's parent is unable to claim (perhaps because they are living abroad or in prison), you may be able to apply instead.
+
+One thing to be aware of: if a closer relative of the deceased, such as a sibling or parent, is currently in work or is not receiving a qualifying benefit, this could affect whether you are able to receive a payment.
+
+## How to Make a Claim
+
+You must apply within 6 months of the funeral, even if your benefit claim is still being processed. If you have already received an invoice or signed contract from the funeral director (not just an estimate), you can apply before the funeral takes place.
+
+## Claiming by Phone
+
+The easiest way to apply is by calling the Bereavement Service helpline. When you call, an adviser will also be able to help you find out whether you are entitled to any other bereavement benefits.
+
+**Bereavement Service Helpline**
+
+- Telephone: 0800 151 2012
+- Welsh language: 0800 731 0453
+- Relay UK (for those who cannot hear or speak on the phone): 18001 then 0800 151 2012
+- British Sign Language (BSL) video relay service is also available
+
+Lines are open Monday to Friday, 8am to 6pm.
+
+## Claiming by Post
+
+You can also download and fill in form SF200 and post it to the address shown on the form, if you would prefer to apply in writing.
+
+## If You Live in Scotland or Northern Ireland
+
+The scheme works a little differently depending on where you are in the UK. In Scotland, Funeral Expenses Payment has been replaced by the Funeral Support Payment, so you will need to apply through that route instead. In Northern Ireland, there is a separate claims process as well.
+
+## What If Your Claim Is Refused?
+
+If you disagree with a decision about your Funeral Expenses Payment, you have the right to appeal to the Social Security and Child Support Tribunal. You do not have to accept the outcome if you feel it is wrong.
+
+We hope this guide has helped make things a little clearer during what is undoubtedly an overwhelming time. If you have any questions about funeral costs more broadly, our team at funeralpricing.co.uk is here to help.
+    `.trim(),
+  },
+  {
     slug: "understanding-funeral-costs-uk",
     title: "Understanding Funeral Costs in the UK: A Complete Guide",
     excerpt:
