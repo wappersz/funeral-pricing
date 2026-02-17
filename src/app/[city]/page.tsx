@@ -205,7 +205,7 @@ export default async function CityPage({ params }: CityPageProps) {
                               href={home.website_url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-block rounded bg-green px-3 py-1 text-xs font-medium text-white transition-opacity hover:opacity-90"
+                              className="inline-block rounded bg-trusted px-3 py-1 text-xs font-medium text-white transition-opacity hover:opacity-90"
                             >
                               View
                             </a>
