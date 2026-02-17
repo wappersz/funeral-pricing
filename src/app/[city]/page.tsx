@@ -82,7 +82,7 @@ export default async function CityPage({ params }: CityPageProps) {
           {featured.length > 0 && (
             <section className="mb-10">
               <div className="mb-4 flex items-center gap-2">
-                <span className="inline-flex items-center rounded-full bg-navy px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
+                <span className="inline-flex items-center rounded-full bg-trusted px-3 py-1 text-xs font-semibold tracking-wide text-white uppercase">
                   Highly Trusted
                 </span>
                 <span className="text-sm text-gray">
@@ -93,10 +93,10 @@ export default async function CityPage({ params }: CityPageProps) {
                 {featured.map((home, i) => (
                   <div
                     key={home.id}
-                    className="relative overflow-hidden rounded-xl border-2 border-green-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+                    className="relative overflow-hidden rounded-xl border-2 border-trusted-border bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
                   >
                     {/* Rank badge */}
-                    <span className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-green-light text-xs font-bold text-navy">
+                    <span className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-trusted-light text-xs font-bold text-trusted">
                       {i + 1}
                     </span>
 
@@ -136,7 +136,7 @@ export default async function CityPage({ params }: CityPageProps) {
                         href={home.website_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mt-4 block rounded-lg bg-green py-2 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
+                        className="mt-4 block rounded-lg bg-trusted py-2 text-center text-sm font-medium text-white transition-opacity hover:opacity-90"
                       >
                         View Website
                       </a>

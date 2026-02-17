@@ -16,6 +16,9 @@
   --color-green: var(--green);
   --color-green-light: #eafbec;
   --color-green-border: #a6e6b1;
+  --color-trusted: #4cbb95;
+  --color-trusted-light: #e8f6f1;
+  --color-trusted-border: #a3dcc8;
   --color-gray: var(--gray);
   --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
