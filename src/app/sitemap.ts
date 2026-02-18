@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { posts } from "@/data/posts";
 import { getTowns } from "@/lib/search";
+import { getCounties } from "@/lib/counties";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const towns = await getTowns();
+  const counties = await getCounties();
 
   return [
     {
@@ -29,6 +31,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
+      url: "https://www.funeralpricing.co.uk/funeral-costs-by-county",
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: "https://www.funeralpricing.co.uk/blog",
       lastModified: new Date(),
       changeFrequency: "weekly",
@@ -40,6 +48,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.8,
+    })),
+    ...counties.map((county) => ({
+      url: `https://www.funeralpricing.co.uk/funeral-costs-by-county/${county.slug}`,
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
     })),
   ];
 }
