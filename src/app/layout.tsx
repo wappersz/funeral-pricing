@@ -8,9 +8,9 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: "Funeral Pricing | Coming Soon",
+  title: "Funeral Pricing | Compare Local Funeral Directors",
   description:
-    "Transparent, compassionate funeral pricing comparison. Helping families make informed decisions during difficult times.",
+    "Helping families across the UK find trusted local funeral directors and compare prices transparently during difficult times.",
 };
 
 export default function RootLayout({
