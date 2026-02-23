@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import Image from "next/image";
 import Link from "next/link";
+import Header from "@/components/Header";
 
 interface SearchResult {
   id: number;
@@ -61,18 +61,7 @@ export default function SearchPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="flex items-center justify-between border-b border-border px-6 py-4">
-        <Link href="/">
-          <Image
-            src="/logo.jpg"
-            alt="Funeral Pricing"
-            width={160}
-            height={40}
-            priority
-          />
-        </Link>
-      </header>
+      <Header />
 
       {/* Main */}
       <main className="flex-1 px-6 py-10">

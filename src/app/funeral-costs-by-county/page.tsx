@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import Header from "@/components/Header";
 import type { Metadata } from "next";
 import { getCountyAverages } from "@/lib/counties";
 import CountyMap from "./county-map";
@@ -18,18 +18,7 @@ export default async function CountyMapPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <header className="flex items-center justify-between border-b border-border px-6 py-4">
-        <Link href="/">
-          <Image
-            src="/logo.jpg"
-            alt="Funeral Pricing"
-            width={160}
-            height={40}
-            priority
-          />
-        </Link>
-      </header>
+      <Header />
 
       {/* Main */}
       <main className="flex-1 px-6 py-10">

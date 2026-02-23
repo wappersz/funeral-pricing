@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import Header from "@/components/Header";
 import { posts } from "@/data/posts";
 import type { Metadata } from "next";
 
@@ -17,17 +17,7 @@ export default function BlogPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="flex items-center justify-between border-b border-border px-6 py-4">
-        <Link href="/">
-          <Image
-            src="/logo.jpg"
-            alt="Funeral Pricing"
-            width={160}
-            height={40}
-            priority
-          />
-        </Link>
-      </header>
+      <Header />
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
         <h1 className="mb-2 text-3xl font-semibold text-navy">Blog</h1>
