@@ -5,6 +5,33 @@ export interface GeoResult {
 }
 
 /**
+ * Returns true if the string looks like a UK postcode (e.g. SW1A 1AA).
+ */
+export function isUKPostcode(query: string): boolean {
+  return /^[A-Z]{1,2}[0-9][0-9A-Z]?\s*[0-9][A-Z]{2}$/i.test(query.trim());
+}
+
+/**
+ * Geocode a UK town, city or village name using Nominatim (OSM).
+ * Falls back to null if the place cannot be found.
+ */
+export async function geocodePlace(query: string): Promise<GeoResult | null> {
+  const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=gb`;
+  const res = await fetch(url, {
+    headers: { "User-Agent": "FuneralPricing/1.0 (funeralpricing.co.uk)" },
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  if (!Array.isArray(data) || data.length === 0) return null;
+  const place = data[0];
+  return {
+    postcode: query.trim(), // used as the display label in search results
+    latitude: parseFloat(place.lat),
+    longitude: parseFloat(place.lon),
+  };
+}
+
+/**
  * Geocode a single UK postcode using postcodes.io (free, no API key).
  */
 export async function geocodePostcode(

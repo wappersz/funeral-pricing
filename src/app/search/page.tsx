@@ -42,7 +42,7 @@ function SearchPageInner() {
 
     try {
       const res = await fetch(
-        `/api/search?postcode=${encodeURIComponent(trimmed)}`
+        `/api/search?q=${encodeURIComponent(trimmed)}`
       );
       const data: SearchResponse = await res.json();
 
@@ -66,7 +66,7 @@ function SearchPageInner() {
   }
 
   useEffect(() => {
-    const fromUrl = searchParams.get("postcode");
+    const fromUrl = searchParams.get("q");
     if (fromUrl) {
       setPostcode(fromUrl);
       runSearch(fromUrl);
@@ -93,7 +93,7 @@ function SearchPageInner() {
               type="text"
               value={postcode}
               onChange={(e) => setPostcode(e.target.value)}
-              placeholder="Enter your postcode (e.g. SW1A 1AA)"
+              placeholder="Enter your postcode or town (e.g. SW1A 1AA or Leeds)"
               className="flex-1 rounded-lg border border-border bg-white px-4 py-3 text-sm text-foreground placeholder:text-gray/60 focus:outline-none focus:ring-2 focus:ring-navy/30"
             />
             <button
