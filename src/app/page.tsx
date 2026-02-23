@@ -109,9 +109,9 @@ export default function Home() {
                 </div>
                 <input
                   type="text"
-                  name="location"
+                  name="postcode"
                   className="block w-full pl-10 pr-3 py-4 border border-gray-300 rounded-md bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#48B693] focus:border-[#48B693] sm:text-lg"
-                  placeholder="e.g. London, Manchester or postcode"
+                  placeholder="Enter your postcode (e.g. SW1A 1AA)"
                 />
               </div>
               <button

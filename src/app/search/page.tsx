@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
 
@@ -23,16 +24,16 @@ interface SearchResponse {
   error?: string;
 }
 
-export default function SearchPage() {
+function SearchPageInner() {
+  const searchParams = useSearchParams();
   const [postcode, setPostcode] = useState("");
   const [results, setResults] = useState<SearchResult[] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchedPostcode, setSearchedPostcode] = useState<string | null>(null);
 
-  async function handleSearch(e: FormEvent) {
-    e.preventDefault();
-    const trimmed = postcode.trim();
+  async function runSearch(query: string) {
+    const trimmed = query.trim();
     if (!trimmed) return;
 
     setLoading(true);
@@ -58,6 +59,19 @@ export default function SearchPage() {
       setLoading(false);
     }
   }
+
+  async function handleSearch(e: FormEvent) {
+    e.preventDefault();
+    await runSearch(postcode);
+  }
+
+  useEffect(() => {
+    const fromUrl = searchParams.get("postcode");
+    if (fromUrl) {
+      setPostcode(fromUrl);
+      runSearch(fromUrl);
+    }
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -251,5 +265,13 @@ export default function SearchPage() {
         </p>
       </footer>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense>
+      <SearchPageInner />
+    </Suspense>
   );
 }
