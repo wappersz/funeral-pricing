@@ -1,10 +1,10 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import SearchForm from "@/components/SearchForm";
+import { getTopCities } from "@/lib/search";
+import { getCountyAverages } from "@/lib/counties";
 
-const TABS = ["Standard Funeral", "Direct Cremation", "Woodland Burial"] as const;
+export const dynamic = "force-dynamic";
 
 const BLOG_POSTS = [
   {
@@ -30,8 +30,16 @@ const BLOG_POSTS = [
   },
 ];
 
-export default function Home() {
-  const [activeTab, setActiveTab] = useState(0);
+export default async function Home() {
+  const [topCities, countyAverages] = await Promise.all([
+    getTopCities(12),
+    getCountyAverages(),
+  ]);
+
+  const cheapestCounties = countyAverages
+    .filter((c) => c.avg_direct_cremation != null)
+    .sort((a, b) => (a.avg_direct_cremation ?? 0) - (b.avg_direct_cremation ?? 0))
+    .slice(0, 5);
 
   return (
     <div className="flex min-h-screen flex-col bg-[#FAFAFA] text-gray-800 antialiased">
@@ -79,55 +87,78 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Tabs */}
-          <div className="rounded-t-lg overflow-hidden flex">
-            {TABS.map((tab, i) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setActiveTab(i)}
-                className={`flex-1 py-3 px-4 text-center cursor-pointer transition-colors ${
-                  activeTab === i
-                    ? "bg-white text-[#1A365D] border-t-4 border-[#48B693] font-semibold"
-                    : "bg-white/85 text-gray-600 border-t-4 border-transparent hover:bg-white/95"
-                }`}
+          <SearchForm />
+        </div>
+      </section>
+
+      {/* Callout section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+          {/* Popular cities */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <h2 className="text-xl font-bold text-[#1A365D] mb-1">Browse by city</h2>
+            <p className="text-sm text-gray-500 mb-5">Find funeral directors in popular UK towns and cities.</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {topCities.map((city) => (
+                <Link
+                  key={city.slug}
+                  href={`/${city.slug}`}
+                  className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-3 py-2 text-sm font-medium text-gray-700 hover:border-[#48B693] hover:text-[#1A365D] transition-colors"
+                >
+                  <span>{city.name}</span>
+                  <span className="text-xs text-gray-400 ml-1">{city.count}</span>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-4">
+              <Link
+                href="/areas"
+                className="text-sm font-medium text-[#48B693] hover:text-[#1A365D] transition-colors"
               >
-                {tab}
-              </button>
-            ))}
+                Browse all towns and cities &rarr;
+              </Link>
+            </div>
           </div>
 
-          {/* Search form */}
-          <div className="bg-white p-6 rounded-b-lg rounded-tr-lg shadow-xl">
-            <form action="/search" method="GET" className="flex flex-col md:flex-row gap-4">
-              <input type="hidden" name="type" value={TABS[activeTab]} />
-              <div className="relative flex-grow">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  name="q"
-                  className="block w-full pl-10 pr-3 py-4 border border-gray-300 rounded-md bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#48B693] focus:border-[#48B693] sm:text-lg"
-                  placeholder="Enter your postcode or town (e.g. SW1A 1AA or Leeds)"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full md:w-auto px-8 py-4 text-lg font-medium rounded-md text-white bg-[#48B693] hover:bg-[#3A9D7E] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#48B693] transition-all hover:scale-[1.02]"
+          {/* Cheapest areas for direct cremation */}
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
+            <h2 className="text-xl font-bold text-[#1A365D] mb-1">Cheapest areas for direct cremation</h2>
+            <p className="text-sm text-gray-500 mb-5">Counties with the lowest average direct cremation prices.</p>
+            <div className="space-y-3">
+              {cheapestCounties.map((county, i) => (
+                <Link
+                  key={county.slug}
+                  href={`/funeral-costs-by-county/${county.slug}`}
+                  className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-4 py-3 hover:border-[#48B693] transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#48B693]/10 text-xs font-bold text-[#48B693]">
+                      {i + 1}
+                    </span>
+                    <span className="text-sm font-medium text-gray-700 group-hover:text-[#1A365D]">{county.county}</span>
+                  </div>
+                  <span className="text-sm font-semibold text-[#1A365D]">
+                    avg £{county.avg_direct_cremation?.toLocaleString()}
+                  </span>
+                </Link>
+              ))}
+            </div>
+            <div className="mt-4">
+              <Link
+                href="/funeral-costs-by-county"
+                className="text-sm font-medium text-[#48B693] hover:text-[#1A365D] transition-colors"
               >
-                Search prices
-              </button>
-            </form>
+                Compare all counties &rarr;
+              </Link>
+            </div>
           </div>
+
         </div>
       </section>
 
       {/* Blog section */}
-      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main className="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-[#1A365D] mb-4">Helpful Guides &amp; Advice</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -193,6 +224,7 @@ export default function Home() {
               <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2 text-sm text-gray-300">
                 <li><Link href="/search" className="hover:text-[#48B693] transition-colors">Search Prices</Link></li>
+                <li><Link href="/areas" className="hover:text-[#48B693] transition-colors">Browse by Area</Link></li>
                 <li><Link href="/about" className="hover:text-[#48B693] transition-colors">About Us</Link></li>
                 <li><Link href="/blog" className="hover:text-[#48B693] transition-colors">Blog &amp; Guides</Link></li>
               </ul>

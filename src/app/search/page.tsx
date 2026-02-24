@@ -131,7 +131,9 @@ function SearchPageInner() {
                   >
                     <div className="flex items-start justify-between gap-2">
                       <h3 className="text-sm font-semibold text-foreground">
-                        {home.name}
+                        <Link href={`/funeral-directors/${home.id}`} className="hover:underline hover:text-navy">
+                          {home.name}
+                        </Link>
                       </h3>
                       {home.website_url ? (
                         <a
@@ -199,7 +201,9 @@ function SearchPageInner() {
                         }
                       >
                         <td className="px-4 py-3 font-medium text-foreground">
-                          {home.name}
+                          <Link href={`/funeral-directors/${home.id}`} className="hover:underline hover:text-navy">
+                            {home.name}
+                          </Link>
                         </td>
                         <td className="px-4 py-3 text-gray">{home.city}</td>
                         <td className="px-4 py-3 text-right text-gray">

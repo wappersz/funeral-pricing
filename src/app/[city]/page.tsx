@@ -91,7 +91,9 @@ export default async function CityPage({ params }: CityPageProps) {
 
                     {/* Name */}
                     <h3 className="pr-8 text-base font-semibold text-foreground leading-tight">
-                      {home.name}
+                      <Link href={`/funeral-directors/${home.id}`} className="hover:text-navy hover:underline">
+                        {home.name}
+                      </Link>
                     </h3>
 
                     {/* Location + distance */}
@@ -152,7 +154,9 @@ export default async function CityPage({ params }: CityPageProps) {
                   >
                     <div className="flex items-start justify-between gap-2">
                       <h3 className="text-sm font-semibold text-foreground">
-                        {home.name}
+                        <Link href={`/funeral-directors/${home.id}`} className="hover:text-navy hover:underline">
+                          {home.name}
+                        </Link>
                       </h3>
                       {home.website_url ? (
                         <a
@@ -220,7 +224,9 @@ export default async function CityPage({ params }: CityPageProps) {
                         }
                       >
                         <td className="px-4 py-3 font-medium text-foreground">
-                          {home.name}
+                          <Link href={`/funeral-directors/${home.id}`} className="hover:text-navy hover:underline">
+                            {home.name}
+                          </Link>
                         </td>
                         <td className="px-4 py-3 text-gray">{home.city}</td>
                         <td className="px-4 py-3 text-right text-gray">

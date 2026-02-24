@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { posts } from "@/data/posts";
 import { getTowns } from "@/lib/search";
 import { getCounties } from "@/lib/counties";
+import { sql } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +17,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const towns = await getTowns();
   const counties = await getCounties();
+  const funeralHomeIds = (
+    await sql`SELECT id FROM funeral_homes WHERE postcode ~ '^[A-Z]'`
+  ) as { id: number }[];
 
   return [
     {
@@ -54,6 +58,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "weekly" as const,
       priority: 0.7,
+    })),
+    {
+      url: "https://www.funeralpricing.co.uk/areas",
+      lastModified: new Date(),
+      changeFrequency: "weekly" as const,
+      priority: 0.8,
+    },
+    ...funeralHomeIds.map((row) => ({
+      url: `https://www.funeralpricing.co.uk/funeral-directors/${row.id}`,
+      lastModified: new Date(),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 }

@@ -86,6 +86,50 @@ export interface SearchResult {
 }
 
 /**
+ * Return the top UK cities by funeral home count.
+ */
+export async function getTopCities(
+  limit = 12
+): Promise<{ name: string; slug: string; count: number }[]> {
+  const rows = await sql`
+    SELECT city,
+           COUNT(*)::int AS count
+    FROM funeral_homes
+    WHERE city != ''
+      AND postcode ~ '^[A-Z]'
+    GROUP BY city
+    ORDER BY count DESC
+    LIMIT ${limit}
+  `;
+  return (rows as Record<string, unknown>[]).map((r) => ({
+    name: r.city as string,
+    slug: toSlug(r.city as string),
+    count: r.count as number,
+  }));
+}
+
+/**
+ * Fetch a single funeral home by its primary key.
+ * Returns null if not found.
+ */
+export async function getFuneralHomeById(
+  id: number
+): Promise<SearchResult | null> {
+  const rows = await sql`
+    SELECT id, name, address, postcode, city,
+           latitude, longitude,
+           price_direct_cremation, price_standard_funeral,
+           website_url, phone_number,
+           0 AS distance_miles
+    FROM funeral_homes
+    WHERE id = ${id}
+    LIMIT 1
+  `;
+  const results = rows as SearchResult[];
+  return results.length > 0 ? results[0] : null;
+}
+
+/**
  * Find funeral homes within `radiusMiles` of (lat, lng) using a
  * Haversine query with bounding-box pre-filter.
  */
