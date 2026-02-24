@@ -60,12 +60,13 @@ export default function Home() {
       <section className="relative bg-gray-900 h-[500px] flex items-center justify-center">
         <div className="absolute inset-0 overflow-hidden">
           <Image
-            src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80"
-            alt="Comforting professionals"
+            src="/hero-bg.png"
+            alt="Peaceful park scene"
             fill
-            className="object-cover opacity-40"
+            className="object-cover"
             priority
           />
+          <div className="absolute inset-0 bg-gray-900/55" />
         </div>
 
         <div className="relative z-10 w-full max-w-4xl px-4 sm:px-6">
