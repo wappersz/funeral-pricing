@@ -4,6 +4,7 @@ import { useState, FormEvent, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
+import PlaceInput from "@/components/PlaceInput";
 
 interface SearchResult {
   id: number;
@@ -89,12 +90,11 @@ function SearchPageInner() {
 
           {/* Search form */}
           <form onSubmit={handleSearch} className="mb-8 flex gap-3">
-            <input
-              type="text"
+            <PlaceInput
               value={postcode}
-              onChange={(e) => setPostcode(e.target.value)}
-              placeholder="Enter your postcode or town (e.g. SW1A 1AA or Leeds)"
-              className="flex-1 rounded-lg border border-border bg-white px-4 py-3 text-sm text-foreground placeholder:text-gray/60 focus:outline-none focus:ring-2 focus:ring-navy/30"
+              onChange={setPostcode}
+              onSelect={(val) => runSearch(val)}
+              inputClassName="block w-full pl-10 pr-3 py-3 rounded-lg border border-border bg-white text-sm text-foreground placeholder:text-gray/60 focus:outline-none focus:ring-2 focus:ring-navy/30"
             />
             <button
               type="submit"
