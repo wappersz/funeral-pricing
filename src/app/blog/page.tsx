@@ -13,7 +13,9 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const today = new Date().toISOString().split("T")[0];
-  const publishedPosts = posts.filter((post) => post.date <= today);
+  const publishedPosts = posts
+    .filter((post) => post.date <= today)
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <div className="flex min-h-screen flex-col">

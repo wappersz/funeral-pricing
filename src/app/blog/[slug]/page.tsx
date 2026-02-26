@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Header from "@/components/Header";
+import FepCoverageChart from "@/components/charts/FepCoverageChart";
 import { notFound } from "next/navigation";
 import { posts } from "@/data/posts";
 import type { Metadata } from "next";
@@ -106,6 +107,9 @@ function renderContent(content: string) {
           Check Funeral Prices Near Me
         </Link>
       );
+    } else if (trimmed === "[CHART_FEP]") {
+      flushList();
+      elements.push(<FepCoverageChart key={`chart-fep-${i}`} />);
     } else if (trimmed.startsWith("## ")) {
       flushList();
       elements.push(
