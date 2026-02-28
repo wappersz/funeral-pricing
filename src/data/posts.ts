@@ -643,7 +643,7 @@ All funeral directors in the UK are required by law to publish a Standardised Pr
 
 When comparing, look at the total cost rather than just the headline fee. Check what is and is not included, and ask whether disbursements are incorporated into the quoted price or billed separately.
 
-You can [**search and compare funeral directors in Dorset**](/areas/dorset) on our site, where you will find local pricing alongside details for each provider.
+You can [**search and compare funeral directors in Dorset**](/funeral-costs-by-county/dorset) on our site, where you will find local pricing alongside details for each provider.
     `.trim(),
   },
   {
@@ -691,7 +691,7 @@ For burial funerals, costs will depend on whether you are using a churchyard, a 
 
 Since 2021, all funeral directors in the UK must publish a Standardised Price List. This makes comparison easier, but prices can still vary considerably between providers. Getting at least two or three itemised quotes is the best way to make sure you are not overpaying.
 
-You can [**browse funeral directors in Derbyshire**](/areas/derbyshire) on our site, where we list local providers and their pricing where available.
+You can [**browse funeral directors in Derbyshire**](/funeral-costs-by-county/derbyshire) on our site, where we list local providers and their pricing where available.
 
 For broader context on funeral costs across the UK, see our [**complete guide to how much a funeral costs**](/blog/how-much-does-funeral-cost).
     `.trim(),
@@ -743,7 +743,7 @@ Several factors push costs up in Swindon relative to nearby rural Wiltshire:
 
 All funeral directors in the UK are required to display a Standardised Price List, which sets out their fees clearly. Given the price variation in Swindon, comparing at least two or three quotes is particularly worthwhile. Make sure you are looking at itemised totals, not just the headline price.
 
-You can [**search funeral directors in Wiltshire and Swindon**](/areas/wiltshire) on our site to see local providers and their pricing where available.
+You can [**search funeral directors in Wiltshire and Swindon**](/funeral-costs-by-county/wiltshire) on our site to see local providers and their pricing where available.
     `.trim(),
   },
   {
@@ -802,7 +802,7 @@ All funeral directors in the UK are legally required to publish a Standardised P
 
 When comparing providers, ask for a full itemised quote that includes both the funeral director's fees and all disbursements. This is the only way to make a fair comparison.
 
-You can [**search and compare funeral directors in Cheshire**](/areas/cheshire) on our site.
+You can [**search and compare funeral directors in Cheshire**](/funeral-costs-by-county/cheshire) on our site.
     `.trim(),
   },
   {
@@ -853,7 +853,7 @@ Kent stretches from the Thames Estuary in the north to the Romney Marsh in the s
 
 All funeral directors in the UK are required to publish a Standardised Price List. With 46 providers in our Kent data alone, comparison is genuinely worthwhile. Even within the same town, prices can differ by several hundred pounds.
 
-You can [**search and compare funeral directors in Kent**](/areas/kent) on our site.
+You can [**search and compare funeral directors in Kent**](/funeral-costs-by-county/kent) on our site.
     `.trim(),
   },
   {
@@ -900,7 +900,7 @@ For burial funerals, plot costs vary across the county. The larger towns and cit
 
 With 33 providers in our Lancashire data, there are real choices to be made. Getting two or three itemised quotes before committing is always worth doing.
 
-You can [**search and compare funeral directors in Lancashire**](/areas/lancashire) on our site.
+You can [**search and compare funeral directors in Lancashire**](/funeral-costs-by-county/lancashire) on our site.
     `.trim(),
   },
   {
@@ -947,7 +947,7 @@ The county has several crematoria, including Basingstoke, Southampton (Hollybroo
 
 All funeral directors must publish a Standardised Price List. With 32 providers in our Hampshire data, there is a reasonable field to compare.
 
-You can [**search and compare funeral directors in Hampshire**](/areas/hampshire) on our site.
+You can [**search and compare funeral directors in Hampshire**](/funeral-costs-by-county/hampshire) on our site.
     `.trim(),
   },
   {
@@ -996,7 +996,7 @@ Essex is a large county with a mix of urban commuter towns, market towns, and co
 
 With 27 providers in our Essex data, it is worth comparing at least two or three. Given the wide range in standard funeral prices (£1,550 to £3,650), the difference between choosing carefully and going with the first option you find can be significant.
 
-You can [**search and compare funeral directors in Essex**](/areas/essex) on our site.
+You can [**search and compare funeral directors in Essex**](/funeral-costs-by-county/essex) on our site.
     `.trim(),
   },
   {
@@ -1046,7 +1046,7 @@ The price variation in Surrey (£1,700 to £3,800 for a standard package) means 
 
 For practical ways to reduce what you pay, see our guide to [**how to keep funeral costs down**](/blog/ultimate-guide-funeral-costs-2026).
 
-You can [**search and compare funeral directors in Surrey**](/areas/surrey) on our site.
+You can [**search and compare funeral directors in Surrey**](/funeral-costs-by-county/surrey) on our site.
     `.trim(),
   },
   {
@@ -1093,7 +1093,7 @@ Burial costs in West Sussex vary considerably. The county has a mix of rural chu
 
 Given the wide price range (£1,700 to £4,007 for a standard package), comparing at least two or three providers before committing is strongly advisable. The difference between the cheapest and most expensive providers in this county is substantial.
 
-You can [**search and compare funeral directors in West Sussex**](/areas/west-sussex) on our site.
+You can [**search and compare funeral directors in West Sussex**](/funeral-costs-by-county/west-sussex) on our site.
     `.trim(),
   },
   {
@@ -1142,7 +1142,7 @@ Devon has several crematoria, including those serving Exeter, Plymouth, Torquay,
 
 Devon has a good mix of long-established independent funeral directors and a smaller number of national group branches. Getting two or three itemised quotes remains the most reliable way to ensure you are paying a fair price.
 
-You can [**search and compare funeral directors in Devon**](/areas/devon) on our site.
+You can [**search and compare funeral directors in Devon**](/funeral-costs-by-county/devon) on our site.
     `.trim(),
   },
   {
@@ -1191,7 +1191,7 @@ Cornwall has crematoria serving Truro, Penmount, and the Bodmin area. Fees vary 
 
 Despite the county's rural character, there are enough providers in our Cornwall data to make comparison worthwhile. The range between the cheapest and most expensive standard funeral packages (£1,699 to £3,705) is wide enough that shopping around could save a family several hundred pounds.
 
-You can [**search and compare funeral directors in Cornwall**](/areas/cornwall) on our site.
+You can [**search and compare funeral directors in Cornwall**](/funeral-costs-by-county/cornwall) on our site.
     `.trim(),
   },
 ];
