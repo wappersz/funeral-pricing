@@ -48,10 +48,8 @@ export default async function CityPage({ params }: CityPageProps) {
   const results: SearchResult[] = await searchNearby(town.lat, town.lng);
   const seoContent = getTownContent(town.name, town.count);
 
-  // Pick 3 featured providers (deterministic per town via simple hash)
-  const featured = results.length >= 3
-    ? pickFeatured(results, town.name, 3)
-    : [];
+  // Pick up to 3 featured providers (deterministic per town via simple hash)
+  const featured = pickFeatured(results, town.name, 3);
 
   return (
     <div className="flex min-h-screen flex-col">
