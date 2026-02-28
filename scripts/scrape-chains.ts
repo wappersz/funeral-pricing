@@ -99,6 +99,7 @@ const CHAINS: Chain[] = [
     name: "East of England Co-op",
     domains: ["eastofengland.coop"],
     pricingUrls: [
+      "https://www.eastofengland.coop/funerals/support/funeral-services-pricing",
       "https://www.eastofengland.coop/funerals/funeral-prices",
       "https://www.eastofengland.coop/funerals/prices",
       "https://www.eastofengland.coop/funerals/costs",
@@ -113,10 +114,11 @@ const CHAINS: Chain[] = [
     name: "Lincolnshire Co-op",
     domains: ["lincolnshire.coop"],
     pricingUrls: [
+      "https://www.lincolnshire.coop/funeral/costs",
+      "https://www.lincolnshire.coop/funeral/our-costs",
+      "https://www.lincolnshire.coop/funeral/prices",
       "https://www.lincolnshire.coop/funeral-services/prices",
       "https://www.lincolnshire.coop/funerals/prices",
-      "https://www.lincolnshire.coop/funerals/costs",
-      "https://www.lincolnshire.coop/funeral-care/prices",
     ],
   },
   // -------------------------------------------------------------------------
