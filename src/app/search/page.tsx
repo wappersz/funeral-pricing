@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, FormEvent, useEffect, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -28,6 +28,7 @@ interface SearchResponse {
 
 function SearchPageInner() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [postcode, setPostcode] = useState("");
   const [results, setResults] = useState<SearchResult[] | null>(null);
   const [loading, setLoading] = useState(false);
@@ -37,6 +38,11 @@ function SearchPageInner() {
   async function runSearch(query: string) {
     const trimmed = query.trim();
     if (!trimmed) return;
+    // Town suggestions carry a direct city path — navigate straight there
+    if (trimmed.startsWith("/")) {
+      router.push(trimmed);
+      return;
+    }
 
     setLoading(true);
     setError(null);

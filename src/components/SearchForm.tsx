@@ -14,6 +14,11 @@ export default function SearchForm() {
   function navigate(q: string) {
     const trimmed = q.trim();
     if (!trimmed) return;
+    // Town suggestions carry a direct redirect path (e.g. "/leeds")
+    if (trimmed.startsWith("/")) {
+      router.push(trimmed);
+      return;
+    }
     router.push(
       `/search?q=${encodeURIComponent(trimmed)}&type=${encodeURIComponent(TABS[activeTab])}`
     );

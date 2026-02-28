@@ -1,3 +1,5 @@
+import { sql } from "@/lib/db";
+
 export interface GeoResult {
   postcode: string;
   latitude: number;
@@ -12,10 +14,36 @@ export function isUKPostcode(query: string): boolean {
 }
 
 /**
- * Geocode a UK town, city or village name using Nominatim (OSM).
- * Falls back to null if the place cannot be found.
+ * Look up a town/city name in our own DB first (fast).
+ * Returns null if not found.
+ */
+async function geocodeTownFromDB(query: string): Promise<GeoResult | null> {
+  try {
+    const rows = await sql`
+      SELECT AVG(latitude)::float AS lat, AVG(longitude)::float AS lng
+      FROM funeral_homes
+      WHERE city ILIKE ${query.trim()}
+        AND city != ''
+        AND postcode ~ '^[A-Z]'
+      LIMIT 1
+    `;
+    const r = (rows as { lat: number; lng: number }[])[0];
+    if (!r?.lat) return null;
+    return { postcode: query.trim(), latitude: r.lat, longitude: r.lng };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Geocode a UK town, city or village name.
+ * Checks our own DB first (fast), then falls back to Nominatim (OSM).
  */
 export async function geocodePlace(query: string): Promise<GeoResult | null> {
+  const fromDB = await geocodeTownFromDB(query);
+  if (fromDB) return fromDB;
+
+  // Fall back to Nominatim for places not in our DB
   const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&countrycodes=gb`;
   const res = await fetch(url, {
     headers: { "User-Agent": "FuneralPricing/1.0 (funeralpricing.co.uk)" },
@@ -25,7 +53,7 @@ export async function geocodePlace(query: string): Promise<GeoResult | null> {
   if (!Array.isArray(data) || data.length === 0) return null;
   const place = data[0];
   return {
-    postcode: query.trim(), // used as the display label in search results
+    postcode: query.trim(),
     latitude: parseFloat(place.lat),
     longitude: parseFloat(place.lon),
   };

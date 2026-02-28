@@ -59,7 +59,7 @@ export default function PlaceInput({
     setSuggestions([]);
     setOpen(false);
     setActiveIndex(-1);
-    onSelect?.(suggestion.value);
+    onSelect?.(suggestion.redirect ?? suggestion.value);
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
