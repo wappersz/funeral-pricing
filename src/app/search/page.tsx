@@ -4,6 +4,7 @@ import { useState, FormEvent, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import PlaceInput from "@/components/PlaceInput";
 
 interface SearchResult {
@@ -258,16 +259,7 @@ function SearchPageInner() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border px-6 py-8 text-center text-sm text-gray">
-        <Link href="/blog" className="transition-colors hover:text-navy">
-          Latest Blog Posts
-        </Link>
-        <p className="mt-2">
-          &copy; {new Date().getFullYear()} funeralpricing.co.uk. All rights
-          reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

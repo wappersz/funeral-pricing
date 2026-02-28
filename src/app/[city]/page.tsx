@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { getTownBySlug, searchNearby, type SearchResult } from "@/lib/search";
 import { getTownContent } from "@/data/town-content";
+import { getCityCounty } from "@/lib/counties";
 
 interface CityPageProps {
   params: Promise<{ city: string }>;
@@ -45,7 +47,10 @@ export default async function CityPage({ params }: CityPageProps) {
   const town = await getTownBySlug(slug);
   if (!town) notFound();
 
-  const results: SearchResult[] = await searchNearby(town.lat, town.lng);
+  const [results, cityCounty] = await Promise.all([
+    searchNearby(town.lat, town.lng),
+    getCityCounty(town.name),
+  ]);
   const seoContent = getTownContent(town.name, town.count);
 
   // Pick up to 3 featured providers (deterministic per town via simple hash)
@@ -58,6 +63,23 @@ export default async function CityPage({ params }: CityPageProps) {
       {/* Main */}
       <main className="flex-1 px-6 py-10">
         <div className="mx-auto max-w-4xl">
+          {cityCounty && (
+            <p className="mb-3 text-sm text-gray">
+              <Link
+                href="/funeral-costs-by-county"
+                className="hover:text-navy transition-colors"
+              >
+                Funeral costs by county
+              </Link>
+              <span className="mx-1.5 text-gray/50">/</span>
+              <Link
+                href={`/funeral-costs-by-county/${cityCounty.slug}`}
+                className="hover:text-navy transition-colors"
+              >
+                {cityCounty.county}
+              </Link>
+            </p>
+          )}
           <h1 className="mb-4 text-3xl font-semibold tracking-tight text-navy">
             Funeral Prices in {town.name}
           </h1>
@@ -286,16 +308,7 @@ export default async function CityPage({ params }: CityPageProps) {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border px-6 py-8 text-center text-sm text-gray">
-        <Link href="/blog" className="transition-colors hover:text-navy">
-          Latest Blog Posts
-        </Link>
-        <p className="mt-2">
-          &copy; {new Date().getFullYear()} funeralpricing.co.uk. All rights
-          reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

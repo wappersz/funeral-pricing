@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import FepCoverageChart from "@/components/charts/FepCoverageChart";
 import { notFound } from "next/navigation";
 import { posts } from "@/data/posts";
@@ -167,16 +168,7 @@ export default async function BlogPostPage({ params }: Props) {
         <article>{renderContent(post.content)}</article>
       </main>
 
-      <footer className="border-t border-border px-6 py-8 text-center text-sm text-gray">
-        <Link href="/blog" className="transition-colors hover:text-navy">
-          Latest Blog Posts
-        </Link>
-        <span className="mx-2">&middot;</span>
-        <p className="mt-2">
-          &copy; {new Date().getFullYear()} funeralpricing.co.uk. All rights
-          reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { getTowns } from "@/lib/search";
 
@@ -71,15 +72,7 @@ export default async function AreasPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border px-6 py-8 text-center text-sm text-gray">
-        <Link href="/blog" className="transition-colors hover:text-navy">
-          Latest Blog Posts
-        </Link>
-        <p className="mt-2">
-          &copy; {new Date().getFullYear()} funeralpricing.co.uk. All rights reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }

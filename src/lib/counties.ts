@@ -137,3 +137,22 @@ export async function getCounties(): Promise<
   const averages = await getCountyAverages();
   return averages.map((a) => ({ county: a.county, slug: a.slug }));
 }
+
+/**
+ * Get the ceremonial county for a given city name.
+ */
+export async function getCityCounty(
+  cityName: string
+): Promise<{ county: string; slug: string } | null> {
+  const rows = await sql`
+    SELECT county FROM funeral_homes
+    WHERE city = ${cityName}
+      AND county IS NOT NULL AND county != ''
+    LIMIT 1
+  `;
+  const results = rows as { county: string }[];
+  if (results.length === 0) return null;
+  const ceremonial = toCeremonialCounty(results[0].county);
+  if (!ceremonial) return null;
+  return { county: ceremonial, slug: countyToSlug(ceremonial) };
+}

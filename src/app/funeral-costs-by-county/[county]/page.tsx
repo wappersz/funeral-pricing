@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import { getCountyHomes, getCountyAverages } from "@/lib/counties";
 import { slugToCounty } from "@/data/county-slugs";
@@ -196,6 +197,33 @@ export default async function CountyDetailPage({ params }: CountyPageProps) {
             {homes.length !== 1 ? "s" : ""} in {countyName}
           </p>
 
+          {/* Towns in this county */}
+          {(() => {
+            const cities = Array.from(
+              new Map(
+                homes.map((h) => [h.city, h.city.replace(/ /g, "-")])
+              ).entries()
+            ).sort((a, b) => a[0].localeCompare(b[0]));
+            return cities.length > 0 ? (
+              <section className="mt-10">
+                <h2 className="mb-4 text-xl font-semibold text-navy">
+                  Towns and cities in {countyName}
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {cities.map(([name, slug]) => (
+                    <Link
+                      key={slug}
+                      href={`/${slug}`}
+                      className="rounded-lg border border-border bg-white px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-navy hover:text-navy"
+                    >
+                      {name}
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            ) : null;
+          })()}
+
           <div className="mt-8">
             <Link
               href="/search"
@@ -207,16 +235,7 @@ export default async function CountyDetailPage({ params }: CountyPageProps) {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border px-6 py-8 text-center text-sm text-gray">
-        <Link href="/blog" className="transition-colors hover:text-navy">
-          Latest Blog Posts
-        </Link>
-        <p className="mt-2">
-          &copy; {new Date().getFullYear()} funeralpricing.co.uk. All rights
-          reserved.
-        </p>
-      </footer>
+      <Footer />
     </div>
   );
 }
